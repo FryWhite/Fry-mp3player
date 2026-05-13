@@ -1,38 +1,37 @@
-name: Deploy & Update MP3 Website
+name: Deploy MP3 Website
 
 on:
   push:
     branches: ["master"]
   schedule:
-    - cron: '0 */5 * * *'   # 每5小时自动更新
+    - cron: '50 */5 * * *'    # 每5小时50分刷新
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      # ===== 更新最后更新时间 =====
-      - name: Update last updated time
+      # 更新时间戳
+      - name: Update timestamp
         run: |
-          CURRENT_TIME=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
-          sed -i "s|<span id=\"update-time\">.*</span>|<span id=\"update-time\">$CURRENT_TIME</span>|g" index.html
+          sed -i "s|<span id=\"update-time\">.*</span>|<span id=\"update-time\">$(date -u +'%Y-%m-%d %H:%M:%S UTC')</span>|g" index.html
 
-      - name: Commit timestamp update to master
+      # 提交时间戳更新
+      - name: Commit changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add index.html
-          git diff --cached --quiet || git commit -m "Auto update timestamp [skip ci]"
-          git push || echo "Nothing to push"
+          git diff --cached --quiet || git commit -m "Auto update [skip ci]"
+          git push || true
 
-      # ===== 部署到 GitHub Pages (gh-pages分支) =====
-      - name: Deploy to GitHub Pages
+      # 部署到 gh-pages 分支
+      - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -40,4 +39,4 @@ jobs:
           publish_branch: gh-pages
           user_name: "github-actions[bot]"
           user_email: "github-actions[bot]@users.noreply.github.com"
-          commit_message: "Deploy to GitHub Pages [skip ci]"
+          commit_message: "Deploy site [skip ci]"
