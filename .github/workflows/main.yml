@@ -16,26 +16,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # 更新时间戳
+      # 更新时间戳（文件在 MP3player/ 目录下）
       - name: Update timestamp
         run: |
-          sed -i "s|<span id=\"update-time\">.*</span>|<span id=\"update-time\">$(date -u +'%Y-%m-%d %H:%M:%S UTC')</span>|g" index.html
+          sed -i "s|<span id=\"update-time\">.*</span>|<span id=\"update-time\">$(date -u +'%Y-%m-%d %H:%M:%S UTC')</span>|g" MP3player/index.html
 
       # 提交时间戳更新
       - name: Commit changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add index.html
+          git add MP3player/index.html
           git diff --cached --quiet || git commit -m "Auto update [skip ci]"
           git push || true
 
-      # 部署到 gh-pages 分支
+      # 部署到 gh-pages 分支（发布 MP3player/ 目录内容到 gh-pages 根目录）
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./
+          publish_dir: ./MP3player
           publish_branch: gh-pages
           user_name: "github-actions[bot]"
           user_email: "github-actions[bot]@users.noreply.github.com"

@@ -1,19 +1,16 @@
 # 忽略所有根目录文件
 /*
 
-# 但保留网站文件
-!index.html
-!鱼虾·岭南水墨.mp3
-!qrcode.png
+# 但保留 MP3player 目录（所有网站文件都在里面）
+!MP3player
+!MP3player/**
 
 # 保留 GitHub Actions 配置
 !.github
 !.github/**
 
-# 保留配置文件
+# 保留本配置文件
 !.gitignore
-!.gitattributes
-!README.md
 
 # 系统文件
 Thumbs.db
