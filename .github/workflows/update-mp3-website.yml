@@ -15,6 +15,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Update last updated time
       run: |
@@ -28,5 +30,7 @@ jobs:
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
         git add index.html
-        git commit -m "Auto update last updated time" || echo "No changes to commit"
+        git diff --cached --quiet || git commit -m "Auto update last updated time"
+        # 使用 GITHUB_TOKEN 认证推送
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
         git push
