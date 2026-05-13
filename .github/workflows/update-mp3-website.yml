@@ -20,13 +20,13 @@ jobs:
       run: |
         # 获取当前UTC时间并格式化
         CURRENT_TIME=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
-        # 更新 index.html 中的时间戳
-        sed -i "s|<span id=\"update-time\">.*</span>|<span id=\"update-time\">$CURRENT_TIME</span>|g" mp3-website/index.html
+        # 更新根目录 index.html 中的时间戳
+        sed -i "s|<span id=\"update-time\">.*</span>|<span id=\"update-time\">$CURRENT_TIME</span>|g" index.html
 
     - name: Commit and push changes
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
-        git add mp3-website/index.html
+        git add index.html
         git commit -m "Auto update last updated time" || echo "No changes to commit"
         git push
