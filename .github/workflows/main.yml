@@ -1,0 +1,65 @@
+name: Deploy & Update MP3 Website
+
+on:
+  push:
+    branches: ["master"]
+  schedule:
+    - cron: '0 */5 * * *'   # 每5小时自动更新
+  workflow_dispatch:         # 手动触发
+
+# 权限
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+# 并发控制
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # ========== 任务1：更新最后更新时间 ==========
+  update-timestamp:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update last updated time
+        run: |
+          CURRENT_TIME=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          sed -i "s|<span id=\"update-time\">.*</span>|<span id=\"update-time\">$CURRENT_TIME</span>|g" index.html
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet || git commit -m "Auto update timestamp [skip ci]"
+          git push || echo "Nothing to push"
+
+  # ========== 任务2：部署到 GitHub Pages ==========
+  deploy:
+    needs: update-timestamp
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
