@@ -1,0 +1,2 @@
+# 移除了MP3的LFS跟踪，GitHub Pages 不支持 LFS
+# *.mp3 filter=lfs diff=lfs merge=lfs -text
