@@ -1,0 +1,39 @@
+name: Update MP3 Website
+
+on: 
+  schedule:
+    - cron: '0 */5 * * *' # 每5小时运行一次
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Install dependencies (if any)
+      run: | 
+        # 如果您的网站有任何依赖项，请在此处安装它们
+        # 例如：npm install
+
+    - name: Update last updated time
+      run: |
+        # 获取当前时间并格式化
+        CURRENT_TIME=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+        # 更新 index.html 中的时间戳
+        sed -i "s|<span id=\"update-time\">.*</span>|<span id=\"update-time\">$CURRENT_TIME</span>|g" mp3-website/index.html
+
+    - name: Commit and push changes
+      run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git add mp3-website/index.html
+        git commit -m "Auto update last updated time"
+        git push

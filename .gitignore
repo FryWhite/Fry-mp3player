@@ -1,0 +1,26 @@
+# 忽略根目录所有文件
+/*
+
+# 但保留 mp3-website 目录及其内容
+!/mp3-website
+!/mp3-website/**
+
+# 保留 .github 目录及其内容（用于 GitHub Actions）
+!/.github
+!/.github/**
+
+# 保留 .gitignore 自身
+!.gitignore
+
+# 保留 README.md
+!/README.md
+
+# 保留 .gitattributes
+!.gitattributes
+
+# Windows系统文件
+Thumbs.db
+Desktop.ini
+
+# macOS系统文件
+.DS_Store
