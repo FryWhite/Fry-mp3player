@@ -3,48 +3,270 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的MP3歌曲</title>
+    <title>鱼虾·岭南水墨 - MP3播放</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
-            background-color: #f4f4f4;
-        }
-        .container {
-            background-color: #fff;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            background-attachment: fixed;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            text-align: center;
         }
+
+        /* 背景装饰：水墨圆形 */
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            border-radius: 50%;
+            opacity: 0.08;
+            z-index: 0;
+            pointer-events: none;
+        }
+        body::before {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #a78bfa, transparent);
+            top: -100px;
+            left: -100px;
+        }
+        body::after {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #60a5fa, transparent);
+            bottom: -80px;
+            right: -80px;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 45px 40px 35px;
+            border-radius: 24px;
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            text-align: center;
+            max-width: 520px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-4px);
+            box-shadow:
+                0 12px 48px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.12);
+        }
+
+        /* 封面图标 */
+        .cover-icon {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 18px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .cover-icon svg {
+            width: 44px;
+            height: 44px;
+            fill: #fff;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 6px;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.55);
+            margin-bottom: 30px;
+            letter-spacing: 4px;
+        }
+
+        /* 音频播放器 */
         audio {
             width: 100%;
-            margin-top: 20px;
+            margin-bottom: 28px;
+            outline: none;
+            border-radius: 30px;
         }
+
+        audio::-webkit-media-controls-panel {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        audio::-webkit-media-controls-play-button {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+        }
+
+        /* 作者信息 */
+        .author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+        }
+
+        .author .label {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .author .name {
+            color: #a78bfa;
+            font-weight: 600;
+            text-shadow: 0 0 20px rgba(167, 139, 250, 0.3);
+        }
+
+        /* 分隔线 */
+        .divider {
+            width: 60px;
+            height: 2px;
+            margin: 0 auto 16px;
+            background: linear-gradient(90deg, transparent, rgba(167, 139, 250, 0.5), transparent);
+            border-radius: 2px;
+        }
+
+        /* 底部信息 */
+        .footer-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
         .last-updated {
-            margin-top: 10px;
-            font-size: 0.8em;
-            color: #666;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.35);
+            letter-spacing: 1px;
+        }
+
+        .last-updated #update-time {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* 二维码链接 */
+        .qrcode-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.35);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .qrcode-link:hover {
+            color: #a78bfa;
+        }
+
+        .qrcode-link svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+
+        /* 响应式 */
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px 25px;
+            }
+            h1 {
+                font-size: 1.4rem;
+            }
+            .cover-icon {
+                width: 70px;
+                height: 70px;
+            }
+            .cover-icon svg {
+                width: 34px;
+                height: 34px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- 封面图标 -->
+        <div class="cover-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55C7.79 13 6 14.79 6 17s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+            </svg>
+        </div>
+
         <h1>鱼虾·岭南水墨</h1>
+        <p class="subtitle">— 灵 动 旋 律 —</p>
+
         <audio controls>
             <source src="鱼虾·岭南水墨.mp3" type="audio/mpeg">
             您的浏览器不支持音频元素。
         </audio>
-        <p class="last-updated">最后更新时间: <span id="update-time">2026-05-14 04:34:40 UTC</span></p>
+
+        <!-- 作者信息 -->
+        <div class="divider"></div>
+        <div class="author">
+            <span class="label">作者</span>
+            <span class="name">颜菲湘</span>
+        </div>
+        <div class="divider"></div>
+
+        <!-- 底部 -->
+        <div class="footer-info">
+            <p class="last-updated">
+                最后更新: <span id="update-time">2026-05-14 04:34:40 UTC</span>
+            </p>
+            <a class="qrcode-link" href="qrcode.png" target="_blank" title="扫码访问">
+                <svg viewBox="0 0 24 24"><path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm10 0h2v2h-2v-2zm2 2h2v2h-2v-2zm-2-6h2v2h-2v-2zm2 2h2v-2h-2v2zm-2 4h2v2h-2v-2zm2 2h2v-2h-2v2z"/></svg>
+                扫码
+            </a>
+        </div>
     </div>
 
     <script>
-        document.getElementById('update-time').textContent = new Date().toLocaleString();
+        document.getElementById('update-time').textContent = new Date().toLocaleString('zh-CN', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        });
     </script>
 </body>
 </html>
