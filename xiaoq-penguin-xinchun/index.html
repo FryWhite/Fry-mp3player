@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="《小Q企鹅闹新春》音乐播放页，作者：颜菲湘。">
+    <title>小Q企鹅闹新春 - 音乐播放</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            min-height: 100vh; display: grid; place-items: center; padding: 24px;
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif; color: #4a1f1a;
+            background: radial-gradient(circle at 16% 17%, rgba(255,248,215,.95), transparent 25%),
+                        radial-gradient(circle at 84% 80%, rgba(202,39,31,.24), transparent 30%),
+                        linear-gradient(145deg, #ffe2a1, #f1a35e 52%, #c4423b);
+        }
+        main {
+            width: min(100%, 500px); padding: 48px 38px 40px; text-align: center;
+            background: rgba(255,250,228,.76); border: 1px solid rgba(255,247,213,.92);
+            border-radius: 30px; box-shadow: 0 24px 70px rgba(106,31,25,.24);
+            backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+        }
+        .emblem {
+            width: 94px; height: 94px; display: grid; place-items: center; margin: 0 auto 24px;
+            border-radius: 50%; color: #fff5cb; background: linear-gradient(145deg, #e15b3f, #97261f);
+            box-shadow: 0 0 0 10px rgba(190,54,42,.13), 0 0 0 20px rgba(190,54,42,.07);
+        }
+        .emblem svg { width: 42px; fill: currentColor; }
+        h1 { font-family: "STKaiti", "KaiTi", serif; font-size: clamp(1.8rem,7vw,2.45rem); font-weight: 600; letter-spacing: .1em; text-indent: .1em; }
+        .subtitle { margin: 10px 0 30px; color: #9b513f; font-size: .9rem; letter-spacing: .3em; text-indent: .3em; }
+        audio { width: 100%; margin-bottom: 27px; }
+        .divider { width: 70px; height: 1px; margin: 0 auto 18px; background: linear-gradient(90deg,transparent,#ba6747,transparent); }
+        .author { display: flex; justify-content: center; align-items: baseline; gap: 10px; }
+        .author .label { color: #a06e59; font-size: .82rem; letter-spacing: .18em; }
+        .author .name { color: #95271f; font-size: 1.05rem; font-weight: 700; letter-spacing: .12em; }
+        .hint { margin-top: 22px; color: #a67860; font-size: .76rem; }
+        @media (max-width:480px) { main { padding: 38px 22px 32px; border-radius: 24px; } .emblem { width: 78px; height: 78px; } }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="emblem" aria-hidden="true">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg>
+        </div>
+        <h1>小Q企鹅闹新春</h1>
+        <p class="subtitle">新春音画转译作品</p>
+        <audio controls preload="metadata">
+            <source src="小Q企鹅闹新春.mp3" type="audio/mpeg">
+            您的浏览器不支持音频播放。
+        </audio>
+        <div class="divider"></div>
+        <div class="author"><span class="label">作者</span><span class="name">颜菲湘</span></div>
+        <p class="hint">点击播放键，一起欢度新春</p>
+    </main>
+</body>
+</html>
