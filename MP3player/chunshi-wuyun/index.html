@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="《春狮舞韵》音乐播放页，作者：颜菲湘。">
+    <title>春狮舞韵 - 音乐播放</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            overflow: hidden;
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+            color: #4c1e18;
+            background:
+                radial-gradient(circle at 16% 18%, rgba(255, 246, 211, 0.95), transparent 27%),
+                radial-gradient(circle at 84% 80%, rgba(190, 36, 28, 0.25), transparent 30%),
+                linear-gradient(145deg, #f8ddb0, #dfa35d 53%, #b84934);
+        }
+
+        body::before,
+        body::after {
+            content: "";
+            position: fixed;
+            border: 2px solid rgba(255, 245, 208, 0.4);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        body::before {
+            width: 380px;
+            height: 380px;
+            top: -180px;
+            right: -90px;
+            box-shadow: 0 0 0 48px rgba(255, 241, 196, 0.08), 0 0 0 96px rgba(255, 241, 196, 0.05);
+        }
+
+        body::after {
+            width: 250px;
+            height: 250px;
+            bottom: -130px;
+            left: -65px;
+            box-shadow: 0 0 0 38px rgba(255, 241, 196, 0.08), 0 0 0 76px rgba(255, 241, 196, 0.05);
+        }
+
+        main {
+            position: relative;
+            width: min(100%, 500px);
+            padding: 48px 38px 40px;
+            text-align: center;
+            background: rgba(255, 250, 230, 0.72);
+            border: 1px solid rgba(255, 247, 218, 0.9);
+            border-radius: 30px;
+            box-shadow: 0 24px 70px rgba(102, 33, 24, 0.25);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+        .emblem {
+            width: 94px;
+            height: 94px;
+            display: grid;
+            place-items: center;
+            margin: 0 auto 24px;
+            border-radius: 50%;
+            color: #fff5cf;
+            background: linear-gradient(145deg, #d95236, #8f211c);
+            box-shadow: 0 0 0 10px rgba(177, 47, 36, 0.13), 0 0 0 20px rgba(177, 47, 36, 0.07);
+        }
+
+        .emblem svg {
+            width: 42px;
+            fill: currentColor;
+        }
+
+        h1 {
+            font-family: "STKaiti", "KaiTi", serif;
+            font-size: clamp(2rem, 8vw, 2.7rem);
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-indent: 0.18em;
+        }
+
+        .subtitle {
+            margin: 10px 0 30px;
+            color: #93513f;
+            font-size: 0.9rem;
+            letter-spacing: 0.32em;
+            text-indent: 0.32em;
+        }
+
+        audio {
+            width: 100%;
+            margin-bottom: 27px;
+        }
+
+        .divider {
+            width: 70px;
+            height: 1px;
+            margin: 0 auto 18px;
+            background: linear-gradient(90deg, transparent, #b66a46, transparent);
+        }
+
+        .author {
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            gap: 10px;
+        }
+
+        .author .label {
+            color: #9a6b59;
+            font-size: 0.82rem;
+            letter-spacing: 0.18em;
+        }
+
+        .author .name {
+            color: #8f211c;
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+        }
+
+        .hint {
+            margin-top: 22px;
+            color: #a17460;
+            font-size: 0.76rem;
+        }
+
+        @media (max-width: 480px) {
+            main {
+                padding: 38px 22px 32px;
+                border-radius: 24px;
+            }
+
+            .emblem {
+                width: 78px;
+                height: 78px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="emblem" aria-hidden="true">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/>
+            </svg>
+        </div>
+
+        <h1>春狮舞韵</h1>
+        <p class="subtitle">非遗音画转译作品</p>
+
+        <audio controls preload="metadata">
+            <source src="春狮舞韵.mp3" type="audio/mpeg">
+            您的浏览器不支持音频播放。
+        </audio>
+
+        <div class="divider"></div>
+        <div class="author">
+            <span class="label">作者</span>
+            <span class="name">颜菲湘</span>
+        </div>
+        <p class="hint">点击播放键，感受春狮舞动的韵律</p>
+    </main>
+</body>
+</html>
