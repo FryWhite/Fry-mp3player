@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="《涟漪春江》音乐播放页，作者：颜菲湘。">
+    <title>涟漪春江 - 音乐播放</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            overflow: hidden;
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+            color: #183b48;
+            background:
+                radial-gradient(circle at 18% 20%, rgba(255, 255, 255, 0.9), transparent 25%),
+                radial-gradient(circle at 82% 78%, rgba(83, 164, 172, 0.28), transparent 28%),
+                linear-gradient(145deg, #e9f4ef, #b8d9d5 52%, #90bdc2);
+        }
+
+        body::before,
+        body::after {
+            content: "";
+            position: fixed;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        body::before {
+            width: 360px;
+            height: 360px;
+            top: -160px;
+            right: -80px;
+            box-shadow: 0 0 0 45px rgba(255, 255, 255, 0.08), 0 0 0 90px rgba(255, 255, 255, 0.05);
+        }
+
+        body::after {
+            width: 240px;
+            height: 240px;
+            bottom: -120px;
+            left: -60px;
+            box-shadow: 0 0 0 36px rgba(255, 255, 255, 0.07), 0 0 0 72px rgba(255, 255, 255, 0.04);
+        }
+
+        main {
+            position: relative;
+            width: min(100%, 500px);
+            padding: 48px 38px 40px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.58);
+            border: 1px solid rgba(255, 255, 255, 0.75);
+            border-radius: 30px;
+            box-shadow: 0 24px 70px rgba(34, 91, 99, 0.22);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+        .ripple {
+            width: 94px;
+            height: 94px;
+            display: grid;
+            place-items: center;
+            margin: 0 auto 24px;
+            border-radius: 50%;
+            color: #fff;
+            background: linear-gradient(145deg, #63aab0, #326f7c);
+            box-shadow: 0 0 0 10px rgba(73, 146, 155, 0.12), 0 0 0 20px rgba(73, 146, 155, 0.07);
+        }
+
+        .ripple svg {
+            width: 42px;
+            fill: currentColor;
+        }
+
+        h1 {
+            font-family: "STKaiti", "KaiTi", serif;
+            font-size: clamp(2rem, 8vw, 2.7rem);
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            text-indent: 0.18em;
+        }
+
+        .subtitle {
+            margin: 10px 0 30px;
+            color: #5a7b82;
+            font-size: 0.9rem;
+            letter-spacing: 0.32em;
+            text-indent: 0.32em;
+        }
+
+        audio {
+            width: 100%;
+            margin-bottom: 27px;
+        }
+
+        .divider {
+            width: 70px;
+            height: 1px;
+            margin: 0 auto 18px;
+            background: linear-gradient(90deg, transparent, #679ba2, transparent);
+        }
+
+        .author {
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            gap: 10px;
+        }
+
+        .author .label {
+            color: #718f95;
+            font-size: 0.82rem;
+            letter-spacing: 0.18em;
+        }
+
+        .author .name {
+            color: #235d68;
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+        }
+
+        .hint {
+            margin-top: 22px;
+            color: #789398;
+            font-size: 0.76rem;
+        }
+
+        @media (max-width: 480px) {
+            main {
+                padding: 38px 22px 32px;
+                border-radius: 24px;
+            }
+
+            .ripple {
+                width: 78px;
+                height: 78px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="ripple" aria-hidden="true">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/>
+            </svg>
+        </div>
+
+        <h1>涟漪春江</h1>
+        <p class="subtitle">音画转译作品</p>
+
+        <audio controls preload="metadata">
+            <source src="涟漪春江.mp3" type="audio/mpeg">
+            您的浏览器不支持音频播放。
+        </audio>
+
+        <div class="divider"></div>
+        <div class="author">
+            <span class="label">作者</span>
+            <span class="name">颜菲湘</span>
+        </div>
+        <p class="hint">点击播放键，聆听春江涟漪</p>
+    </main>
+</body>
+</html>
